@@ -129,22 +129,3 @@ rows = int(input("Nombre de lignes: "))
 columns = int(input("Nombre de colonnes: "))
 game = Jeu(rows, columns)
 game.play()
-
-
-
-
-
-
-
-
-class Plateau:
-
-    def placement_jeton(self, col, joueur):
-        for i in np.r_[:self.rows]:
-            i = self.rows - 1 - i
-            if self.plato[i, col]==0:
-                self.plato[i, col]=joueur
-                break
-            elif i==0:
-                print("La colonne est pleine. Essayez une autre colonne.")
-                continue
