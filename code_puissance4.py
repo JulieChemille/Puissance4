@@ -3,12 +3,15 @@ import numpy as np
 #pour colorer la grille, ne marche pas sur jupyter notebook!
 from colorama import Fore, Style
 #https://pypi.org/project/colorama/
+import tkinter as tk
 
 
 ## Suivant les suggestions de HOTMAN
+# Rajouter un classe menu !!!!!
 #Une classe Plateau
 #Une classe Joueur
-#Une classe Jeu
+#Une classe Fin_de_partie
+#Une classe IA
 
 class Plateau:
     #On définit le "constructeur de la classe", self = instance de l'objet en cours de création
