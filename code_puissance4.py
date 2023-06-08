@@ -4,10 +4,9 @@ import numpy as np
 from colorama import Fore, Style
 #https://pypi.org/project/colorama/
 import tkinter as tk
+#gymnasium : "emballage" pour faire son jeu
 
-
-## Suivant les suggestions de HOTMAN
-# Rajouter un classe menu !!!!!
+# Rajouter une classe menu !!!!!
 #Une classe Plateau
 #Une classe Joueur
 #Une classe Fin_de_partie
