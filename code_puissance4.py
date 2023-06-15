@@ -6,10 +6,9 @@ from colorama import Fore, Style
 
 # Rajouter une classe menu?
 
-
 class Plateau:
     """ Classe représentant le plateau de jeu"""
-
+    
     def __init__(self, rows, columns):
         """Constructeur de la classe, initialise le plateau et ses dimensions"""
         self.rows = rows
@@ -53,11 +52,23 @@ class Joueur:
             except ValueError:
                 print("Ce n'est pas un nombre. Essayez encore.")
 
-
 class IA(Joueur):
     """Classe représentant le joueur IA"""
-    print("IA ok")
+    def __init__(self, numero, max_choix, exploration_rate=0.3):
+        super().__init__(numero, max_choix) 
+        #super() : fonction qui permet d'appeler une méthode d'une classe parente
+        self.exploration_rate = exploration_rate
 
+
+    def jouer(self):
+        if np.random.rand() < self.exploration_rate:
+            return np.random.randint(0, self.max_choix)  # Choix aléatoire
+        else:
+            return self.meilleur_coup()  # Choix basé sur le modèle
+
+    def meilleur_coup(self):
+        """Retourne le meilleur coup à jouer"""
+        pass    
 
 class Fin_Partie:
     """Classe représentant la fin de partie"""
