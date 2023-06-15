@@ -34,6 +34,49 @@ class Plateau:
         couleur = Fore.RED if joueur == 1 else Fore.YELLOW
         print(couleur + str(self.plato) + Style.RESET_ALL)
 
+    def check_victoire(self):
+        """Vérifie si un joueur a gagné"""
+        rows, columns = self.plato.rows, self.plato.columns
+
+        # verif en ligne
+        for r in np.r_[:rows]:
+            for d in np.r_[:columns-3]:
+                f = d+4
+                s = np.prod(self.plato.plato[r, d:f])
+                if s == 1 or s ==16:
+                    return True
+
+        # verif en colonne
+        for c in np.r_[:columns]:
+            for d in np.r_[:rows-3]:
+                f = d+4
+                s = np.prod(self.plato.plato[d:f, c])
+                if s == 1 or s ==16:
+                    return True
+
+        # verif en diagonale (bas gauche vers haut droite)
+        for r in np.r_[:rows-3]:
+            for c in np.r_[:columns-3]:
+                f = c+4
+                s = np.prod([self.plato.plato[r+i, c+i] for i in range(4)])
+                if s == 1 or s ==16:
+                    return True
+
+        # verif en diagonale (haut gauche vers bas droite)
+        for r in np.r_[3:rows]:
+            for c in np.r_[:columns-3]:
+                f = c+4
+                s = np.prod([self.plato.plato[r-i, c+i] for i in range(4)])
+                if s == 1 or s ==16:
+                    return True
+        return False
+    
+    # Obtenir les actions possibles à partir de l'état actuel de la grille
+    def get_actions(grille):
+        return np.where(grille[0] == 0)[0]
+    
+    def get_etat(grille):
+        return ''.join(map(str, grille.flatten()))
 
 class Joueur:
     """Classe représentant un joueur humain"""
@@ -57,50 +100,6 @@ class Joueur:
 class IA(Joueur):
     """Classe représentant le joueur IA"""
     print("IA ok")
-
-
-class Fin_Partie:
-    """Classe représentant la fin de partie"""
-
-    def __init__(self, plato):
-        self.plato = plato
-
-    def check_victoire(self, joueur):
-        """Vérifie si un joueur a gagné"""
-        rows, columns = self.plato.rows, self.plato.columns
-
-        # verif en ligne
-        for r in np.r_[:rows]:
-            for d in np.r_[:columns-3]:
-                f = d+4
-                s = np.prod(self.plato.plato[r, d:f])
-                if s == joueur**4:
-                    return True
-
-        # verif en colonne
-        for c in np.r_[:columns]:
-            for d in np.r_[:rows-3]:
-                f = d+4
-                s = np.prod(self.plato.plato[d:f, c])
-                if s == joueur**4:
-                    return True
-
-        # verif en diagonale (bas gauche vers haut droite)
-        for r in np.r_[:rows-3]:
-            for c in np.r_[:columns-3]:
-                f = c+4
-                s = np.prod([self.plato.plato[r+i, c+i] for i in range(4)])
-                if s == joueur**4:
-                    return True
-
-        # verif en diagonale (haut gauche vers bas droite)
-        for r in np.r_[3:rows]:
-            for c in np.r_[:columns-3]:
-                f = c+4
-                s = np.prod([self.plato.plato[r-i, c+i] for i in range(4)])
-                if s == joueur**4:
-                    return True
-        return False
 
 
 class Jeu:
