@@ -1,9 +1,7 @@
-import os
 import numpy as np
 #pour colorer la grille, ne marche pas sur jupyter notebook!
 from colorama import Fore, Style
 #https://pypi.org/project/colorama/
-import tkinter as tk
 #gymnasium : "emballage" pour faire son jeu
 
 # Rajouter une classe menu !!!!!
@@ -13,21 +11,21 @@ import tkinter as tk
 #Une classe IA
 
 class Plateau:
-    #On définit le "constructeur de la classe", self = instance de l'objet en cours de création
-    #En d'autres termes on ajoute des caractéristiques
+    """ Classe représentant le plateau de jeu"""
+
     def __init__(self, rows, columns):
+        """Constructeur de la classe, initialise le plateau et ses dimensions"""
         self.rows=rows
         self.columns=columns
         self.plato=np.zeros((rows,columns))
 
-    #On peut commencer à définir nos fonctions (ou méthode)
-    
-    #Cette fonction va renvoyer 'False' dans la boucle de jeu de la classe Jeu
-    #si la colonne est pleine
+    #Cette fonction va renvoyer 'False' dans la boucle de la classe Jeu si la colonne est pleine
     def colonne_check(self, col):
+        """Vérifie si la colonne est pleine"""
         return self.plato[0][col] == 0
 
     def placement_jeton(self, col, joueur):
+        """Place le jeton du joueur dans la colonne qu'il sélectionne"""
         for i in np.r_[:self.rows][::-1]:
             if self.plato[i][col]==0:
                 self.plato[i][col]=joueur
@@ -35,34 +33,39 @@ class Plateau:
         return False
     
     def affichage(self, joueur):
+        """Affiche le plateau de jeu à l'instant t"""
         couleur = Fore.RED if joueur == 1 else Fore.YELLOW
         print(couleur + str(self.plato) + Style.RESET_ALL)
 
-#Une classe joueur qui nous permettra d'intégrer nos IA
 
 class Joueur:
+    """Classe représentant un joueur humain"""
     def __init__(self, numero, max_choix):
+        """Iinitialise le joueur et son numéro et le nombre de choix possibles"""
         self.numero = numero
         self.max_choix = max_choix
 
     def jouer(self):
+        """Demande au joueur de choisir une colonne"""
         while True:
             try:
                 choix = int(input(f'A vous de jouer (entre 1 et {self.max_choix}): ')) - 1
                 return choix
             except ValueError:
                 print("Ce n'est pas un nombre. Essayez encore.")
-    #On définit une class IA qui ne sera pas utilisée pour le moment
-
+    
 class IA(Joueur):
-        print("IA ok")
+    """Classe représentant le joueur IA"""
+    pass
 
 
 class Fin_de_partie:
+    """Classe représentant la fin de partie"""
     def __init__(self,plato):
         self.plato = plato
 
     def check_victoire(self, joueur):
+        """Vérifie si un joueur a gagné"""
         rows, columns = self.plato.rows, self.plato.columns
 
         #verif en ligne
@@ -100,11 +103,13 @@ class Fin_de_partie:
         return False
     
 class Jeu:
+    """Classe représentant le jeu en lui-même"""
     def __init__(self, rows, columns):
         self.plato = Plateau(rows, columns)
         self.joueurs = [Joueur(1, columns), Joueur(2, columns)]
         self.check = Fin_de_partie(self.plato)
 
+    """Fonction qui lance le jeu"""
     def play(self):
         while True:
             for joueur in self.joueurs:
@@ -127,7 +132,12 @@ class Jeu:
                             print("Et non! la colonne est pleine. Essayez une autre colonne.")
                     else:
                         print(f"Choix invalide. Essayez un nombre entre 1 et {self.plato.columns}.")
+
+"""Initialisation du jeu par l'utilisateur"""
+
 rows = int(input("Nombre de lignes: "))
 columns = int(input("Nombre de colonnes: "))
 game = Jeu(rows, columns)
+
+"""Lancement du jeu"""
 game.play()
