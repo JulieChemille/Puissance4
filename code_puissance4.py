@@ -1,10 +1,10 @@
 import numpy as np
-#pour colorer la grille, ne marche pas sur jupyter notebook!
+# pour colorer la grille, ne marche pas sur jupyter notebook!
 from colorama import Fore, Style
-#https://pypi.org/project/colorama/
-#gymnasium : "emballage" pour faire son jeu
+# https://pypi.org/project/colorama/
+# gymnasium : "emballage" pour faire son jeu
 
-#Rajouter une classe menu?
+# Rajouter une classe menu?
 
 
 class Plateau:
@@ -93,7 +93,7 @@ class Fin_Partie:
                 if s == joueur**4:
                     return True
 
-        #verif en diagonale (haut gauche vers bas droite)
+        # verif en diagonale (haut gauche vers bas droite)
         for r in np.r_[3:rows]:
             for c in np.r_[:columns-3]:
                 f = c+4
@@ -138,10 +138,10 @@ class Jeu:
                         print(
                             f"Choix invalide. Essayez un nombre entre 1 et {self.plato.columns}.")
 
-"""Initialisation du jeu par l'utilisateur"""
+#Initialisation du jeu par l'utilisateur
 rows = int(input("Nombre de lignes: "))
 columns = int(input("Nombre de colonnes: "))
 game = Jeu(rows, columns)
 
-"""Lancement du jeu"""
+#Lancement du jeu
 game.play()
