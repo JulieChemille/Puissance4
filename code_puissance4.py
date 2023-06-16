@@ -5,8 +5,6 @@ from colorama import Fore, Style
 # gymnasium : "emballage" pour faire son jeu
 
 # Rajouter une classe menu?
-
-
 class Plateau:
     """ Classe représentant le plateau de jeu"""
 
@@ -100,7 +98,6 @@ class Joueur:
 class IA(Joueur):
     """Classe représentant le joueur IA"""
     print("IA ok")
-
 
 class Jeu:
     """Classe représentant le jeu en lui-même"""
