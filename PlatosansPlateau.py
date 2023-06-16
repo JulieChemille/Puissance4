@@ -1,1 +1,4 @@
-import code_puissance4
+from code_puissance4 import Jeu
+
+game.play()
+
