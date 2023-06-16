@@ -72,11 +72,11 @@ class Plateau:
         return False
     
     # Obtenir les actions possibles à partir de l'état actuel de la grille
-    def get_actions(grille):
-        return np.where(grille[0] == 0)[0]
+    def get_actions(self):
+        return np.where(self[0] == 0)[0]
     
-    def get_etat(grille):
-        return ''.join(map(str, grille.flatten()))
+    def get_etat(self):
+        return ''.join(map(str, self.flatten()))
 
 class Joueur:
     """Classe représentant un joueur humain"""
