@@ -36,13 +36,13 @@ class Plateau:
 
     def check_victoire(self):
         """Vérifie si un joueur a gagné"""
-        rows, columns = self.plato.rows, self.plato.columns
+        rows, columns = self.rows, self.columns
 
         # verif en ligne
         for r in np.r_[:rows]:
             for d in np.r_[:columns-3]:
                 f = d+4
-                s = np.prod(self.plato.plato[r, d:f])
+                s = np.prod(self.plato[r, d:f])
                 if s == 1 or s ==16:
                     return True
 
@@ -50,7 +50,7 @@ class Plateau:
         for c in np.r_[:columns]:
             for d in np.r_[:rows-3]:
                 f = d+4
-                s = np.prod(self.plato.plato[d:f, c])
+                s = np.prod(self.plato[d:f, c])
                 if s == 1 or s ==16:
                     return True
 
@@ -58,7 +58,7 @@ class Plateau:
         for r in np.r_[:rows-3]:
             for c in np.r_[:columns-3]:
                 f = c+4
-                s = np.prod([self.plato.plato[r+i, c+i] for i in range(4)])
+                s = np.prod([self.plato[r+i, c+i] for i in range(4)])
                 if s == 1 or s ==16:
                     return True
 
@@ -66,17 +66,17 @@ class Plateau:
         for r in np.r_[3:rows]:
             for c in np.r_[:columns-3]:
                 f = c+4
-                s = np.prod([self.plato.plato[r-i, c+i] for i in range(4)])
+                s = np.prod([self.plato[r-i, c+i] for i in range(4)])
                 if s == 1 or s ==16:
                     return True
         return False
     
     # Obtenir les actions possibles à partir de l'état actuel de la grille
-    def get_actions(self):
-        return np.where(self[0] == 0)[0]
+    #def get_actions(self):
+    #    return np.where(self[0] == 0)[0]
     
-    def get_etat(self):
-        return ''.join(map(str, self.flatten()))
+    #def get_etat(self):
+    #    return ''.join(map(str, self.flatten()))
 
 class Joueur:
     """Classe représentant un joueur humain"""
@@ -109,7 +109,6 @@ class Jeu:
         """Initialise le jeu"""
         self.plato = Plateau(rows, columns)
         self.joueurs = [Joueur(1, columns), Joueur(2, columns)]
-        self.check = Fin_Partie(self.plato)
 
     def play(self):
         """Lance le jeu et vérifie si un joueur a gagné ou si la partie est nulle"""
@@ -123,7 +122,7 @@ class Jeu:
                         if self.plato.colonne_check(choix):
                             self.plato.placement_jeton(choix, joueur.numero)
                             self.plato.affichage(joueur.numero)
-                            if self.check.check_victoire(joueur.numero):
+                            if self.plato.check_victoire():
                                 print(f"Joueur {joueur.numero} a gagné!")
                                 return
                             elif np.all(self.plato.plato != 0):
