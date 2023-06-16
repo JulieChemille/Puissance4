@@ -2,12 +2,13 @@ import numpy as np
 # pour colorer la grille, ne marche pas sur jupyter notebook!
 from colorama import Fore, Style
 # https://pypi.org/project/colorama/
-# gymnasium : "emballage" pour faire son jeu
+# gymnasium : "emballage" pour faire son jeu standardise la façon dont un agent inter avec un envt
+
 
 # Rajouter une classe menu?
 
 class Plateau:
-    """ Classe représentant le plateau de jeu"""
+    """Classe représentant le plateau de jeu"""
     
     def __init__(self, rows, columns):
         """Constructeur de la classe, initialise le plateau et ses dimensions"""
@@ -54,22 +55,13 @@ class Joueur:
 
 class IA(Joueur):
     """Classe représentant le joueur IA"""
-    def __init__(self, numero, max_choix, exploration_rate=0.3):
-        super().__init__(numero, max_choix) 
-        #super() : fonction qui permet d'appeler une méthode d'une classe parente
-        self.exploration_rate = exploration_rate
 
+    def __init__(self, numero, max_choix):
+        super().__init__(numero, max_choix)
 
     def jouer(self):
-        if np.random.rand() < self.exploration_rate:
-            return np.random.randint(0, self.max_choix)  # Choix aléatoire
-        else:
-            return self.meilleur_coup()  # Choix basé sur le modèle
-
-    def meilleur_coup(self):
-        """Retourne le meilleur coup à jouer"""
-        pass    
-
+        return np.random.randint(0, self.max_choix) 
+    
 class Fin_Partie:
     """Classe représentant la fin de partie"""
 
@@ -120,7 +112,7 @@ class Jeu:
     def __init__(self, rows, columns):
         """Initialise le jeu"""
         self.plato = Plateau(rows, columns)
-        self.joueurs = [Joueur(1, columns), Joueur(2, columns)]
+        self.joueurs = [Joueur(1, columns), IA(2, columns)]
         self.check = Fin_Partie(self.plato)
 
     def play(self):
